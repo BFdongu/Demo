@@ -1,0 +1,5 @@
+<mapper namespace="com.example.mapper.MyEntityMapper">
+    <select id="findAll" resultType="com.example.model.MyEntity">
+        SELECT * FROM COMMUNITY_BOARD
+    </select>
+</mapper>
