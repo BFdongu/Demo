@@ -1,56 +1,43 @@
 plugins {
+	id 'org.springframework.boot' version '3.0.0' // 사용할 스프링 부트 버전
+	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 	id 'java'
-	id 'org.springframework.boot' version '3.3.3'
-	id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '17' // 사용하는 Java 버전
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
+	// 스프링 부트 스타터
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA 의존성
-
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'mysql:mysql-connector-java'
-
-	// MySQL JDBC 드라이버 의존성 추가
-	implementation 'mysql:mysql-connector-java:8.0.33'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
-	implementation 'org.mybatis:mybatis'
-
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc' // JPA 대신 MyBatis 사용 시
 
-//	runtimeOnly 'com.h2database:h2'
+	// MySQL + MyBatis
+	implementation 'mysql:mysql-connector-java'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
 
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	// JWT
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
-//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+	// 테스트
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
 
-
+	// Lombok
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+//	annotationProcessor 'org.projectlombok:lombok'
+//	implementation 'org.projectlombok:lombok'
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }
