@@ -14,4 +14,9 @@
         FROM MBER_ACCOUNT_INFO
     </select>
 
+    <insert id="registerAccount">
+        INSERT INTO MBER_ACCOUNT_INFO(id, password)
+        VALUES(#{id}, #{password})
+    </insert>
+
 </mapper>

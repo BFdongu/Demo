@@ -15,27 +15,30 @@ repositories {
 dependencies {
 	// 스프링 부트 스타터
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc' // JPA 대신 MyBatis 사용 시
 
 	// MySQL + MyBatis
 	implementation 'mysql:mysql-connector-java'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
 
+
+	// spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 	// JWT
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 	// 테스트
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
-
 	// Lombok
 	compileOnly 'org.projectlombok:lombok:1.18.30'
 	annotationProcessor 'org.projectlombok:lombok:1.18.30'
-//	annotationProcessor 'org.projectlombok:lombok'
-//	implementation 'org.projectlombok:lombok'
+
 }
 
 test {

@@ -10,5 +10,8 @@ import java.util.Map;
 @Mapper
 public interface MberMapper {
     Map<String, Object> searchPassword(String id);
+
     Map<String, Object> getAllMberAccount();
+
+    void registerAccount(String id, String password);
 }
