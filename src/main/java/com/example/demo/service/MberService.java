@@ -5,7 +5,6 @@ import com.example.demo.entity.Mber;
 import com.example.demo.mapper.MberMapper;
 import com.example.demo.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,9 +48,11 @@ public class MberService {
     // 로그인
     public String login(String id, String password) {
        Map<String, Object> mber = new HashMap<>();
-        mber = mberMapper.searchAccount(id); // 아이디로 계정을 확인해서 없다면 회원가입을 권유 있다면 정보 저장
+        mber = mberMapper.searchAccount(id); // 아이디로 계정을 확인해서 없다면 회원가입을 권유, 있다면 정보 저장
+        System.out.println(mber);
+        System.out.println((String)mber.get("password"));
 
-        if ( !bCryptPasswordEncoder.matches(password, (String) mber.get("password"))) {
+        if ( !bCryptPasswordEncoder.matches(password, (String)mber.get("password"))) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
 
