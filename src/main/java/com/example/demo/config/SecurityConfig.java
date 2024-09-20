@@ -16,12 +16,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
-                .csrf().disable().headers().frameOptions().disable()
-                .and()
+                .csrf().disable()
+    //                .headers().frameOptions().disable()
+    //                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/test/**", "/login", "/register").permitAll().anyRequest().authenticated());
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/mber/**", "/test/**", "/login", "/register").permitAll()
+//                        .requestMatchers("/getAllMberAccount").hasRole("admin")
+                        .anyRequest().authenticated());
 
         return http.build();
     }

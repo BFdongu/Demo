@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -47,20 +48,21 @@ public class MberService {
 
     // 로그인
     public String login(String id, String password) {
-       Map<String, Object> mber = new HashMap<>();
+        Map<String, Object> mber = new HashMap<>();
+        String role;
+
         mber = mberMapper.searchAccount(id); // 아이디로 계정을 확인해서 없다면 회원가입을 권유, 있다면 정보 저장
-        System.out.println(mber);
-        System.out.println((String)mber.get("password"));
+        role = (String)mber.get("role");
 
         if ( !bCryptPasswordEncoder.matches(password, (String)mber.get("password"))) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
 
-        return JwtUtil.createToken(id, expireTimeMs, secretKey);
+        return JwtUtil.createToken(id, role, expireTimeMs, secretKey);
     }
 
     // 모든 계정 조회
-    public Map<String, Object> getAllMberAccount() {
+    public List<Map<String, Object>> getAllMberAccount() {
         return mberMapper.getAllMberAccount();
     }
 

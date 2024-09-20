@@ -1,22 +1,18 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.MberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
-
 
 @RestController
 @RequestMapping("/mber")
+@RequiredArgsConstructor
 public class MberController {
-
-    @Autowired
-    private MberService mberService;
-
-    public MberController(MberService mberService) {
-        this.mberService = mberService;
-    }
+    private final MberService mberService;
 
     // 계정 검색
     @GetMapping("/searchAccount")
@@ -26,7 +22,7 @@ public class MberController {
 
     // 계정 전체 조회
     @GetMapping("/getAllMberAccount")
-    public Map<String, Object> getAllMberAccount() {
+    public List<Map<String, Object>> getAllMberAccount() {
         return mberService.getAllMberAccount();
     }
 }

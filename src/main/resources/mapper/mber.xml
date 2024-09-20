@@ -4,7 +4,7 @@
 <mapper namespace="com.example.demo.mapper.MberMapper">
 
     <select id="searchAccount" parameterType="String" resultType="map">
-        SELECT id, password
+        SELECT id, password, role
         FROM MBER_ACCOUNT_INFO
         WHERE id = #{id}
     </select>

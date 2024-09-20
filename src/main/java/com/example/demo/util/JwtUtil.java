@@ -7,9 +7,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 
 public class JwtUtil {
-    public static String createToken(String id, long expireTimeMs, String key) {
+    public static String createToken(String id, String role, long expireTimeMs, String key) {
         Claims claims = Jwts.claims();
         claims.put("id", id);
+        claims.put("role", role);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -17,5 +18,9 @@ public class JwtUtil {
                 .setExpiration(new Date(System.currentTimeMillis() + expireTimeMs))
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
+    }
+
+    public static String validateToken() {
+        return "";
     }
 }

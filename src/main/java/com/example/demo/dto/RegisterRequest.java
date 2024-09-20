@@ -22,7 +22,7 @@ public class RegisterRequest {
     public Mber toEntity(String password) {
         return Mber.builder()
                 .id(this.id)
-                .password(this.password)
+                .password(password)
                 .role(this.role)
                 .isAccountNonExpired(this.isAccountNonExpired)
                 .isAccountNonLocked(this.isAccountNonLocked)
