@@ -29,9 +29,9 @@ public class SecurityConfig { // Spring Security의 설정을 관리하는 클�
                 // http의 인증/인가 규칙을 설정해주는 코드
                 .authorizeHttpRequests(auth -> auth
                         // 아래의 경로로 들어오는 요청은 누구나 접근 가능
-                        .requestMatchers("/test/**", "/login", "/register").permitAll()
+                        .requestMatchers("/mber/**","/test/**", "/login", "/register").permitAll()
                         // 아래의 경로로 들어오는 요청은 admin 권한이 있는 사용자만 접근이 가능
-                        .requestMatchers("/mber/getAllMberAccount").hasRole("admin")
+//                        .requestMatchers("/mber/getAllMberAccount").hasRole("admin")
                         // 그 외의 경로로 들어오는 요청은 인증을 요구한다.
                         .anyRequest().authenticated());
 

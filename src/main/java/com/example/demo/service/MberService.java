@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.entity.Mber;
 import com.example.demo.mapper.MberMapper;
-import com.example.demo.util.JwtUtil;
+import com.example.demo.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
