@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface MberMapper {
+public interface MberMapper { // 매퍼 인터페이스
     Map<String, Object> searchAccount(String id);
 
     List<Map<String, Object>> getAllMberAccount();

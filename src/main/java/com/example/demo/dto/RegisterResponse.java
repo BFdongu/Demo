@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class RegisterResponse {
+public class RegisterResponse { // 회원가입 응답 틀
     private String id;
 }

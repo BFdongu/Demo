@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Mber {
+public class Mber { // 맴버 클래스, DB있는 MBER_ACCOUNT_INFO랑 동일한 내용
     private String id;
     private String password;
     private String role;
@@ -16,8 +16,9 @@ public class Mber {
     private boolean isCredentialsExpired;
     private boolean isEnabled;
 
-    public static Mber fromEntity(Mber mber) {
-        Mber member = Mber.builder()
+    // Entity에서 변환하다 ...
+    public static Mber fromEntity(Mber mber) { // 맴버 클래스를 인자로 받아서 맴버를 반환해 주는 건데 .. 애는 왜 있는 건지 잘 모르겠다. toEntity의 경우 비밀번호 암호화라도 하는데 이건 .. 음 ..
+        Mber member = Mber.builder() // 애도 사용할 때 주의할 것! UserDetail을 상속할 경우 role 아래에 있는 변수들이 null 값이게 되면 에러가 나오는 경우가 있을 수 있음
                 .id(mber.getId())
                 .password(mber.getPassword())
                 .role(mber.getRole())

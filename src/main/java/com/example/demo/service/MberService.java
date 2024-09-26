@@ -32,14 +32,12 @@ public class MberService {
     // 회원가입
     public Mber register(RegisterRequest request) {
         Map<String, Object> check = new HashMap<>();
-        check = mberMapper.searchAccount(request.getId()); // check변수로 계정의 아이디와 비밀번호르 받고
+        check = mberMapper.searchAccount(request.getId()); // check변수로 계정의 아이디와 비밀번호를 받고
 
-        // 만약 있다면 RuntimeException
-        if(check == null) {
-            Mber saveMber = request.toEntity(request.getPassword()) ; // 맴버 객체로 반환할 saveMber를 만들어야 한다.
-
-            mberMapper.register(request.toEntity(bCryptPasswordEncoder.encode(request.getPassword())));
-            return Mber.fromEntity(saveMber);
+        if(check == null) { // check 변수가 null이라면 계정을 생성할수 있다는 의미이므로 계정 생성하기
+            Mber saveMber = request.toEntity(bCryptPasswordEncoder.encode(request.getPassword())); // 회원가입 요청이 들어온 request를 맴버 엔티티로 변환해준다. 이 때, 아마 세붓사항들이 전부 null 값으로 조정될 것이다.
+            mberMapper.register(saveMber); // 매버로 넘겨준다.
+            return saveMber;
         }
         else {
             throw new RuntimeException("해당 아이디가 존재합니다.");
@@ -49,16 +47,13 @@ public class MberService {
     // 로그인
     public String login(String id, String password) {
         Map<String, Object> mber = new HashMap<>();
-        String role;
+        mber = mberMapper.searchAccount(id); // 아이디로 계정을 찾아서 정보를 map형식으로 받는다.
 
-        mber = mberMapper.searchAccount(id); // 아이디로 계정을 확인해서 없다면 회원가입을 권유, 있다면 정보 저장
-        role = (String)mber.get("role");
-
-        if ( !bCryptPasswordEncoder.matches(password, (String)mber.get("password"))) {
+        if ( !bCryptPasswordEncoder.matches(password, (String)mber.get("password"))) { // 만약 비밀번호가 다른 시 런타임 오류 발생
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
 
-        return JwtUtil.createToken(id, role, expireTimeMs, secretKey);
+        return JwtUtil.createToken(id, (String) mber.get("role"), expireTimeMs, secretKey); // 토큰을 발급
     }
 
     // 모든 계정 조회
