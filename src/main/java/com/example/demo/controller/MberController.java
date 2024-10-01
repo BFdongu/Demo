@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Mber;
 import com.example.demo.service.MberService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -27,6 +28,10 @@ public class MberController {
         return mberService.searchAccount(id);
     }
 
+    // 맴버 엔티티로 계정 검색
+    @GetMapping("/searchAccountWithMber")
+    public Mber searchAccountWithMber(String id) {return mberService.searchAccountWithMber(id); }
+
     // 계정 전체 조회
     @GetMapping("/getAllMberAccount")
     public List<Map<String, Object>> getAllMberAccount(HttpServletRequest request) {
@@ -43,7 +48,7 @@ public class MberController {
                         .getBody();
 
                 String role = (String) claims.get("role"); // 클레임에서 role 추출
-                if (role.equals("admin")) {
+                if (role.equals("ROLE_ADMIN")) {
                     return mberService.getAllMberAccount();
                 }
             } catch (Exception e) {
@@ -53,6 +58,6 @@ public class MberController {
         else {
 //            return "No token found in Authorization header.";
         }
-        return null; // 앤 왜 널값을 반환해도 괜찮은 거지 ?
+        return null; // 앤 왜 널값을 반환해도 괜찮은 거지 ?   
     }
 }

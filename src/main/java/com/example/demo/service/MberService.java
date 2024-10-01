@@ -6,6 +6,7 @@ import com.example.demo.mapper.MberMapper;
 import com.example.demo.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +65,9 @@ public class MberService {
     // 아이디로 계정 검색
     public Map<String, Object> searchAccount(String id) {
         return mberMapper.searchAccount(id);
+    }
+
+    public Mber searchAccountWithMber(String id) {
+        return mberMapper.searchAccountWithMber(id);
     }
 }

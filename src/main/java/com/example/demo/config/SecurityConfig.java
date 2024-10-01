@@ -1,5 +1,7 @@
 package com.example.demo.config;
 
+import com.example.demo.jwt.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,11 +9,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig { // Spring Security의 설정을 관리하는 클래스
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { // http 보안 설정을 구성, 인증/인가/세션 정책등을 설정
         http
@@ -29,11 +35,12 @@ public class SecurityConfig { // Spring Security의 설정을 관리하는 클�
                 // http의 인증/인가 규칙을 설정해주는 코드
                 .authorizeHttpRequests(auth -> auth
                         // 아래의 경로로 들어오는 요청은 누구나 접근 가능
-                        .requestMatchers("/mber/**","/test/**", "/login", "/register").permitAll()
+                        .requestMatchers("/test/**", "/login", "/register").permitAll()
                         // 아래의 경로로 들어오는 요청은 admin 권한이 있는 사용자만 접근이 가능
-//                        .requestMatchers("/mber/getAllMberAccount").hasRole("admin")
+                        .requestMatchers("/mber/getAllMberAccount").hasRole("ADMIN")
                         // 그 외의 경로로 들어오는 요청은 인증을 요구한다.
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // 필터 등록;
 
         return http.build(); // 위의 설정대로 http 보안 설정을 빌드한다.
     }

@@ -3,11 +3,20 @@ package com.example.demo.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Builder
-public class Mber { // 맴버 클래스, DB있는 MBER_ACCOUNT_INFO랑 동일한 내용
+public class Mber implements UserDetails { // 맴버 클래스, DB있는 MBER_ACCOUNT_INFO랑 동일한 내용
     private String id;
     private String password;
     private String role;
@@ -28,5 +37,20 @@ public class Mber { // 맴버 클래스, DB있는 MBER_ACCOUNT_INFO랑 동일한
                 .isEnabled(mber.isEnabled())
                 .build();
         return member;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.id;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.isCredentialsExpired;
     }
 }

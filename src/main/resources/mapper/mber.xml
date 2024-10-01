@@ -9,8 +9,8 @@
         WHERE id = #{id}
     </select>
 
-    <select id="searchAccountWithMber" resultType="com.example.demo.entity.Mber">
-        SELECT id, password
+    <select id="searchAccountWithMber" parameterType="String" resultType="com.example.demo.entity.Mber">
+        SELECT id, password, role
         FROM MBER_ACCOUNT_INFO
         WHERE id = #{id}
     </select>

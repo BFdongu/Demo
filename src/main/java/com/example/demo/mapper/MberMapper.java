@@ -9,10 +9,9 @@ import java.util.Map;
 @Mapper
 public interface MberMapper { // 매퍼 인터페이스
     Map<String, Object> searchAccount(String id);
+    Mber searchAccountWithMber(String id);
 
     List<Map<String, Object>> getAllMberAccount();
-
-    Mber searchAccountWithMber(String id);
 
     void register(Mber mber);
 }
